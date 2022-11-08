@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'observables';
+  number: number = 0;
 
-  myObservable = new this.myObservable()
+  //create an observable
+  myObservable = new Observable((observer) => {
+    observer.next(this.number++);
+  })
+
+  add() {
+    this.myObservable.subscribe((value) => {
+      console.log(value);
+    });
+  }
 }
