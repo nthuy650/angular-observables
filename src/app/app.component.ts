@@ -6,18 +6,30 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'observables';
-  number: number = 0;
 
   //create an observable
   myObservable = new Observable((observer) => {
-    observer.next(this.number++);
+    console.log('Observable starts');
+    setTimeout(() => observer.next("1"), 1000);
+    setTimeout(() => observer.next("2"), 2000);
+    setTimeout(() => observer.next("3"), 3000);
+   // setTimeout(() => observer.error(new Error("Something went wrong!!!")), 3000);
+    setTimeout(() => observer.next("4"), 4000);
+    setTimeout(() => observer.next("5"), 5000);
+    setTimeout(() => observer.complete(), 6000);
   })
 
-  add() {
+  ngOnInit(): void {
     this.myObservable.subscribe((value) => {
       console.log(value);
-    });
+    },
+    (error) => {
+      alert(error);
+    },
+    () => {
+      console.log("Observable completed emitting all values!!")
+    })
   }
 }
